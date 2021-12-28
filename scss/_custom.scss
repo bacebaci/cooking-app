@@ -94,7 +94,16 @@ nav {
     }
 }
 
-
+/* PAGINATION */
+.pagination button {
+    margin-left: 5px;
+    color: $link-color;
+    background: white;
+    padding: 5px;
+}
+.pagination button:hover {
+    color: #333;
+}
 /* CARD */
 
 #card-container {

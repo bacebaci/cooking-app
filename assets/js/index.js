@@ -50,13 +50,56 @@ function createCard(cardData) {
 
     return card;
 
-};
-
-// Show cards on screen using the createCard function
-let cardContainer = document.getElementById('card-container');
-for (let i = 0; i < recipeData.length; i++) {
-    let card = createCard(recipeData[i]);
-    cardContainer.appendChild(card)
 }
+
+// Print cards on screen with pagination
+let cardContainer = document.getElementById('card-container');
+// Number of cards per page
+let perPage = 9;
+// Starting element index
+let currentIndex = 0;
+
+printCards(perPage);
+
+// Print cards on loading page
+function printCards(lastElementOfPage) {
+    cardContainer.innerHTML = "";
+
+    for(let i = currentIndex; i < lastElementOfPage; i++){
+      if(typeof recipeData[i] == 'undefined'){
+          continue;
+      }
+
+      let card = createCard(recipeData[i]);
+      cardContainer.appendChild(card);
+    }
+}
+
+// Print cards on next page
+let nexPage = document.getElementsByClassName('next-page');
+for (let i = 0; i < nexPage.length; i++) {
+    nexPage[i].addEventListener('click', () => {
+        if (recipeData.length <= currentIndex + perPage){
+            return false;
+        }
+        currentIndex += perPage;
+        printCards(currentIndex + perPage);
+    })
+}
+
+// Print cards on previous page
+let previousPage = document.getElementsByClassName('previous-page');
+for (let i = 0; i < previousPage.length; i++) {
+    previousPage[i].addEventListener('click', () => {
+        if (currentIndex == 0) {
+            return false
+        }
+        currentIndex -= perPage;
+        printCards(currentIndex + perPage);
+    })
+}
+
+
+
 
 
