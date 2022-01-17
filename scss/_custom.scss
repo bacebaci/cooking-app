@@ -138,6 +138,7 @@ nav {
         }
     }
 }
+
 #full-recipe-container {
     display: none;
     background-color: white;
@@ -151,6 +152,8 @@ nav {
 #full-recipe{
     padding: 30px 0;
     .card {
+        width: 100%;
+        border: 2px solid rgba(0,0,0,0.125);
         .ingredients-wrapper {
             padding: 1.25rem;
             background-color: #febfb7;
@@ -175,6 +178,4 @@ nav {
         margin: 30px;
     }
 }
-
-
 

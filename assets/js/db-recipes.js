@@ -1,4 +1,4 @@
-let recipeData = Object.values({
+let allRecipesData = Object.values({
     "2": {
         "id": "2",
         "name": "Baked Shrimp Scampi",
