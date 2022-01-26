@@ -102,6 +102,9 @@ nav {
     background: white;
     padding: 5px;
 }
+.pagination button a {
+    color: $link-color;
+}
 .pagination button:hover {
     color: #333;
 }

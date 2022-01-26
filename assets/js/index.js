@@ -1,10 +1,15 @@
-let fullReciepeContainer = document.querySelector('#full-recipe-container');
+let fullRecipeContainer = document.querySelector('#full-recipe-container');
 let searchContainer = document.querySelector('#search-container');
 let cardRecipeContainer = document.getElementById('card-recipe-container');
 let previousPage = document.getElementsByClassName('previous-page');
 let currentPageElements = document.getElementsByClassName('current-page');
 let cardContainer = document.getElementById('card-container'); // Print cards on screen with pagination
 let nexPage = document.getElementsByClassName('next-page');
+let searchInput = document.getElementById('search-recipe');
+let searchButton = document.getElementById('search-button');
+let allRecipeButton = document.getElementsByClassName('all-recipe');
+console.log(allRecipeButton)
+
 
 let filteredData = [];
 let recipeData = allRecipesData;
@@ -76,7 +81,6 @@ function createCard(cardData) {
     card.appendChild(action);
 
     return card;
-
 }
 
 function resetPagination() {
@@ -140,18 +144,40 @@ function renderFullRecipe() {
     instructions[0].innerText = recipe.instructions;
 }
 
+function searchRecipe() {
+    searchButton.addEventListener('click', () => {
+        location.hash = "#search-" + searchInput.value;
+
+        resetPagination();
+
+        let searchFilteredData = allRecipesData.filter((r) => {
+            if(r.tags.includes(searchInput.value)) return true;
+            if (r.name.includes(searchInput.value)) return true;
+            if (r.instructions.includes(searchInput.value)) return true;
+            return false;
+        });
+
+        recipeData = searchFilteredData;
+        printCards(perPage);
+        calculateAndSetTotalPagesNumber();
+    })
+
+    searchInput.value = "";
+}
+
+
 function handleRoute() {
     let currentHash = location.hash
-    if (currentHash == '' || currentHash == '#' || currentHash.includes('tag-')) {
+    if (currentHash == '' || currentHash == '#' || currentHash.includes('tag-') || currentHash.includes('search-')) {
         // display card recipe container
         cardRecipeContainer.style.display = 'flex';
-        fullReciepeContainer.style.display = 'none';
+        fullRecipeContainer.style.display = 'none';
         searchContainer.style.display = "flex";
-
     } else {
+        // display full recipe container
         cardRecipeContainer.style.display = 'none';
         searchContainer.style.display = 'none';
-        fullReciepeContainer.style.display = 'flex';
+        fullRecipeContainer.style.display = 'flex';
         renderFullRecipe()
     }
 }
@@ -159,6 +185,18 @@ function handleRoute() {
 // Event Listeners on load and hashchange
 window.addEventListener('hashchange', handleRoute);
 window.addEventListener('load', handleRoute);
+
+
+// Print all recipe on all recipe button
+for (let i= 0; i<allRecipeButton.length; i++){
+    allRecipeButton[i].addEventListener('click', (e)=>{
+        resetPagination();
+        recipeData = allRecipesData;
+        printCards(perPage);
+        calculateAndSetTotalPagesNumber();
+    });
+}
+
 
 // Print cards on next page
 for (let i = 0; i < nexPage.length; i++) {
@@ -186,6 +224,7 @@ for (let i = 0; i < previousPage.length; i++) {
 
 // Invoke printCards function
 printCards(perPage);
+searchRecipe();
 calculateAndSetTotalPagesNumber();
 
 
