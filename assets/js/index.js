@@ -201,6 +201,7 @@ for (let i= 0; i<allRecipeButton.length; i++){
 // Print cards on next page
 for (let i = 0; i < nexPage.length; i++) {
     nexPage[i].addEventListener('click', () => {
+        console.log('baci', recipeData.length, currentIndex + perPage);
         if (recipeData.length <= currentIndex + perPage) {
             return false;
         }
